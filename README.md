@@ -41,7 +41,7 @@ onQRCodeScan(session => {
  *  Create WalletConnector
  */
 const walletConnector = new RNWalletConnect(
-  'https://walletconnect.matic.network',
+  'https://bridge.walletconnect.org',  // Bridge URL
   {
     sessionId: session.sessionId,
     sharedKey: session.sharedKey,
@@ -54,7 +54,7 @@ const walletConnector = new RNWalletConnect(
  */
 walletConnector.sendSessionStatus({
   fcmToken: '12354...3adc',
-  walletWebhook: 'https://walletconnect.matic.network/notification/new',  
+  walletWebhook: 'https://push.walletconnect.org/notification/new',  
   data: {
     accounts: [
       '0x0000000000000000000000000000000000000000'
