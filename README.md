@@ -2,7 +2,7 @@
 
 Library to connect React-Native mobile wallets to desktop Dapps using WalletConnect
 
-You can read more about WalletConnect protocol here: http://walletconnect.org/
+You can read more about WalletConnect standard here: http://walletconnect.org/
 
 ### Setup
 
