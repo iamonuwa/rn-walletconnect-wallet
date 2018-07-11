@@ -10,8 +10,20 @@ export default class WalletConnector extends Connector {
       throw new Error('fcmToken and walletWebhook are required')
     }
 
+    let verifiedData
+    // check if provided data is array or string
+    if (Array.isArray(data)) {
+      data.map(address => {
+        this.validateEthereumAddress(address) ? verifiedData = data : console.log('Invalid eth address')
+      })
+    } else if (typeof data === 'string') {
+      verifiedData = data.split().map(address => {
+        this.validateEthereumAddress(address) ? verifiedData = data.split() : console.log('Invalid eth address')
+      })
+    }
+
     // encrypt data
-    const encryptedData = await this.encrypt(data)
+    const encryptedData = await this.encrypt(verifiedData)
 
     // store transaction info on bridge
     const res = await fetch(`${this.bridgeURL}/session/${this.sessionId}`, {
@@ -79,5 +91,9 @@ export default class WalletConnector extends Connector {
     return this._getEncryptedData(
       `/session/${this.sessionId}/transaction/${transactionId}`
     )
+  }
+
+  async validateEthereumAddress(address) {
+    return (/^(0x){1}[0-9a-fA-F]{40}$/i.test(address))
   }
 }
