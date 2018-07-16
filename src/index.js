@@ -14,26 +14,24 @@ export default class WalletConnector extends Connector {
       throw new Error('fcmToken and walletWebhook are required')
     }
 
-    let verifiedData = null
+    let verifiedData = []
     // check if provided data is array or string
     if (Array.isArray(data)) {
-      data.map(address => {
+      data.forEach(address => {
         if (this.validateEthereumAddress(address)) {
-          verifiedData = data
+          verifiedData.push(address)
         } else {
           throw new Error('Invalid ethereum address')
         }
       })
     } else if (typeof data === 'string') {
-      verifiedData = data
-        .split()
-        .map(address => {
-          if (this.validateEthereumAddress(address)) {
-            verifiedData = data.split()
-          } else {
-            throw new Error('Invalid ethereum address')
-          }
-        })
+      data.split().forEach(address => {
+        if (this.validateEthereumAddress(address)) {
+          verifiedData.push(address)
+        } else {
+          throw new Error('Invalid ethereum address')
+        }
+      })
     }
 
     // encrypt data
